@@ -1,4 +1,20 @@
 cmake_minimum_required(VERSION 3.11)
+
+option(TOOLCHAIN "Path to arm toolchain")
+option(SYSROOT "Path to sysroot")
+
+if (TOOLCHAIN)
+get_filename_component(TOOLCHAIN_REALPATH ${TOOLCHAIN} REALPATH)
+get_filename_component(SYSROOT_REALPATH ${SYSROOT} REALPATH)
+message(TOOLCHAIN_REALPATH="${TOOLCHAIN_REALPATH}")
+message(SYSROOT_REALPATH="${SYSROOT_REALPATH}")
+set(CMAKE_SYSTEM_NAME Linux)
+set(CMAKE_SYSTEM_PROCESSOR arm)
+set(CMAKE_SYSROOT ${SYSROOT_REALPATH})
+set(CMAKE_C_COMPILER ${TOOLCHAIN_REALPATH}/bin/arm-linux-gnueabihf-gcc)
+set(CMAKE_CXX_COMPILER ${TOOLCHAIN_REALPATH}/bin/arm-linux-gnueabihf-g++)
+endif()
+
 project(function2 VERSION 4.2.0 LANGUAGES CXX)
 
 if (NOT FU2_IS_FIND_INCLUDED)
